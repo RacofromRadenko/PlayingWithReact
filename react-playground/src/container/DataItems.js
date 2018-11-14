@@ -1,133 +1,172 @@
 import React, { Component } from 'react';
 import axiosGetInstance from '../axios';
-import Item from '../components/Item'
+import Item from '../components/Item';
 import './DataItems.less';
-import ItemDetails from '../components/ItemDetails/ItemDetails'
-import Header from '../components/Header/Header'
+import axios from 'axios';
+import { Redirect, withRouter } from 'react-router-dom';
 
 class DataItems extends Component {
+	state = {
+		data: [],
+		currentPageNumber: 1,
+		totalPages: 4,
+		displayData: [],
+		itemDetails: false
+	};
 
-    state = {
-        data: [],
-        currentPageNumber: 1,
-        totalPages: 4,
-        displayData: [],
-        itemDetails: false
-    }
+	componentDidMount() {
+		console.log(this.props);
+		axiosGetInstance
+			.get()
+			.then((res) => {
+				console.log(res.data.docs);
+				const dataResult = res.data.docs;
+				const extractData = dataResult.slice(0, 20);
+				const getForPageOne = extractData.slice(0, 6);
+				this.setState({
+					data: extractData,
+					displayData: getForPageOne
+				});
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}
 
+	displayOnPage() {
+		console.log('usao');
+		const dataPerPage = [ ...this.state.data ];
+		switch (this.state.currentPageNumber) {
+			case 1:
+				return { ...this.state.displayData };
+			case 2:
+				console.log(this.state.currentPageNumber);
+				const nextSix = dataPerPage.slice(6, 12);
+				console.log(nextSix);
+				console.log('usao122');
+				this.setState({ displayData: nextSix });
+				return this.state.displayData;
 
-    componentDidMount() {
-        axiosGetInstance.get().then(
-            res => {
-                console.log(res.data.docs)
-                const dataResult = res.data.docs;
-                const extractData = dataResult.slice(0, 20);
-                const getForPageOne = extractData.slice(0, 6);
-                this.setState({
-                    data: extractData,
-                    displayData: getForPageOne
-                })
-            }
-        ).catch(error => {
-            console.log(error)
-        });
+			case 3:
+				console.log(this.state.currentPageNumber);
+				const updatedArrayOfAjaxData = dataPerPage;
+				const lastSix = updatedArrayOfAjaxData.slice(13, 19);
+				console.log(lastSix);
+				console.log('usao33');
+				this.setState({ displayData: lastSix });
+				return this.state.displayData;
 
-    }
+			case 4:
+				console.log(this.state.currentPageNumber);
+				const spreadUpdatedData = dataPerPage;
+				const lastTwo = spreadUpdatedData.slice(18, 20);
+				console.log(lastTwo);
+				console.log('usao44');
 
+				this.setState({ displayData: lastTwo });
+				return this.state.displayData;
 
-    displayOnPage() {
-        console.log("usao");
-        const dataPerPage = [...this.state.data];
-        switch (this.state.currentPageNumber) {
-            case 1:
-                return { ...this.state.displayData };
-            case 2:
-                console.log(this.state.currentPageNumber)
-                const nextSix = dataPerPage.slice(6, 12);
-                console.log(nextSix);
-                console.log("usao122")
-                this.setState({ displayData: nextSix });
-                return this.state.displayData;
+			default:
+				break;
+		}
+	}
 
-            case 3:
-                console.log(this.state.currentPageNumber)
-                const updatedArrayOfAjaxData = dataPerPage;
-                const lastSix = updatedArrayOfAjaxData.slice(13, 19);
-                console.log(lastSix);
-                console.log("usao33")
-                this.setState({ displayData: lastSix })
-                return this.state.displayData
+	addToAccount = (e, data) => {
+		console.log(e.target.value, data);
 
-            case 4:
-                console.log(this.state.currentPageNumber)
-                const spreadUpdatedData = dataPerPage;
-                const lastTwo = spreadUpdatedData.slice(18, 20);
-                console.log(lastTwo);
-                console.log("usao44")
+		e.preventDefault();
+		console.log(data.id);
+		const config = {
+			crossDomain: true,
+			url: 'https://sandboxapi.g2a.com/v1/order',
+			method: 'POST',
+			headers: {
+				Authorization: 'qdaiciDiyMaTjxMt, 74026b3dc2c6db6a30a73e71cdb138b1e1b5eb7a97ced46689e2d28db1050875',
+				'Content-Type': 'application/json'
+			},
+			processData: false,
+			data: { product_id: data.id }
+		};
 
-                this.setState({ displayData: lastTwo })
-                return this.state.displayData
+		axios(config)
+			.then((res) => {
+				console.log(res);
+				if (res.status === 200) {
+					return <Redirect to={{ pathname: '/item-details' }} push />;
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
-            default:
-                break;
-        }
-    }
+	handleClick = (type) => {
+		var counter = 0;
 
-    moreInformation = (evt) => {
-        console.log(evt)
-    }
+		this.displayOnPage();
+		if (
+			this.state.currentPageNumber <= this.state.totalPages &&
+			this.state.currentPageNumber > 1 &&
+			type === 'dec'
+		) {
+			document.getElementsByClassName('Previous')[0].innerHTML = counter;
+			counter--;
+			this.setState(
+				{
+					currentPageNumber: this.state.currentPageNumber - 1
+				},
+				() => console.log(this.state.currentPageNumber)
+			);
+			console.log(this.state.currentPageNumber);
+		} else if (
+			this.state.currentPageNumber >= 1 &&
+			this.state.currentPageNumber < this.state.totalPages &&
+			type === 'inc'
+		) {
+			document.getElementsByClassName('Next')[0].innerHTML = counter;
+			counter++;
+			this.setState(
+				(prevState) => ({
+					currentPageNumber: prevState.currentPageNumber + 1
+				}),
+				() => {
+					console.log(this.state.currentPageNumber);
+				}
+			);
+		}
+		console.log(this.state.currentPageNumber);
+	};
 
+	render() {
+		const item = this.state.displayData.map((item) => {
+			return (
+				<Item
+					name={item.name}
+					key={item.id}
+					thumbnail={item.thumbnail}
+					image={item.smallImage}
+					moreInfo={this.moreInformation}
+					add={this.addToAccount}
+					data={item}
+					price={item.minPrice}
+				/>
+			);
+		});
 
-    addToItemStoreList = (selectedItem) => {
-        const itemData = this.state.displayData[selectedItem];
-        console.log(itemData);
-
-    }
-
-    handleClick = (type) => {
-        var counter = 0;
-
-
-        this.displayOnPage();
-        if (this.state.currentPageNumber <= this.state.totalPages && this.state.currentPageNumber > 1 && type === "dec") {
-            document.getElementsByClassName('Previous')[0].innerHTML = counter;
-            counter--;
-            this.setState(({
-                currentPageNumber: this.state.currentPageNumber - 1
-            }), () => (console.log(this.state.currentPageNumber)))
-            console.log(this.state.currentPageNumber)
-        } else if (this.state.currentPageNumber >= 1 && this.state.currentPageNumber < this.state.totalPages && type === "inc") {
-            document.getElementsByClassName('Next')[0].innerHTML = counter;
-            counter++;
-            this.setState(prevState => ({
-                currentPageNumber: prevState.currentPageNumber + 1
-            }), () => { console.log(this.state.currentPageNumber) })
-        }
-        console.log(this.state.currentPageNumber)
-
-    }
-
-    render() {
-        const item = this.state.displayData.map(
-            item => {
-                return (
-                    <Item name={item.name} key={item.id} thumbnail={item.thumbnail} image={item.smallImage} moreInfo={this.moreInformation} add={this.addToItemStoreList} />
-                )
-            }
-        )
-
-        return (
-            <div className="DataItems">
-                <ItemDetails itemDetailsFlag={this.state.itemDetails} {...this.props} />
-                {item}
-                <div className="bottom-area">
-                    <button className="btn btn-info Previous" onClick={() => this.handleClick("dec")}>Previous</button>
-                    <button className="btn btn-info Next" onClick={() => this.handleClick("inc")}>Next</button>
-                </div>
-            </div>
-        )
-    }
-
+		return (
+			<div className="DataItems">
+				{item}
+				<div className="bottom-area">
+					<button className="btn btn-info Previous" onClick={() => this.handleClick('dec')}>
+						Previous
+					</button>
+					<button className="btn btn-info Next" onClick={() => this.handleClick('inc')}>
+						Next
+					</button>
+				</div>
+			</div>
+		);
+	}
 }
 
-export default DataItems;
+export default withRouter(DataItems);
