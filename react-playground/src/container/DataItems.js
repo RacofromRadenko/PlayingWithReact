@@ -4,6 +4,7 @@ import Item from '../components/Item';
 import './DataItems.less';
 import axios from 'axios';
 import { Redirect, withRouter } from 'react-router-dom';
+import ItemDetails from '../components/ItemDetails/ItemDetails';
 
 class DataItems extends Component {
 	state = {
@@ -90,9 +91,17 @@ class DataItems extends Component {
 
 		axios(config)
 			.then((res) => {
-				console.log(res);
+				// console.log(res);
 				if (res.status === 200) {
-					return <Redirect to={{ pathname: '/item-details' }} push />;
+					console.log('ene', res.data);
+					// return <Redirect to="/item-details/" />;
+					return this.props.history.push({
+						pathname: '/item-details',
+						state: {
+							data: data,
+							transactionResponseData: res.data
+						}
+					});
 				}
 			})
 			.catch((err) => {

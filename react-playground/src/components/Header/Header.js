@@ -1,19 +1,25 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import './Header.less';
 
-const header = (props) => {
-	return (
-		<div className="container">
-			<div className="header">
-				<NavLink to="/">Home</NavLink>
-				<NavLink to="/tournaments">Tournaments</NavLink>
-				<NavLink to="/gn-projects">GN Projects</NavLink>
-				<NavLink to="/gs-share">GS Share</NavLink>
-			</div>
-		</div>
-	);
-};
+class Header extends Component {
+	state = {
+		showTournament: true
+	};
 
-export default header;
+	render() {
+		return (
+			<div className="container">
+				<div className="Header">
+					<Link to="/">Home</Link>
+					<Link to="/tournaments">Tournaments</Link>
+					<Link to="/gn-projects">GN Projects</Link>
+					<Link to="/gs-share">GS Share</Link>
+				</div>
+			</div>
+		);
+	}
+}
+
+export default Header;
