@@ -6,7 +6,10 @@ const axiosGetInstance = axios.create({
 		// "Content-Type": " application/json"
 	},
 	params: {
-		bilo: 'sta'
+		bilo: 'sta',
+		minPriceFrom: 2,
+		minPriceTo: 6,
+		currency: 'EUR'
 	},
 	baseURL: 'https://sandboxapi.g2a.com/v1/products',
 	method: 'get'

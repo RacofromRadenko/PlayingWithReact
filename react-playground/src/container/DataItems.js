@@ -3,8 +3,6 @@ import axiosGetInstance from '../axios';
 import Item from '../components/Item';
 import './DataItems.less';
 import axios from 'axios';
-import { Redirect, withRouter } from 'react-router-dom';
-import ItemDetails from '../components/ItemDetails/ItemDetails';
 
 class DataItems extends Component {
 	state = {
@@ -12,11 +10,11 @@ class DataItems extends Component {
 		currentPageNumber: 1,
 		totalPages: 4,
 		displayData: [],
-		itemDetails: false
+		itemDetails: false,
+		currency: 'EUR'
 	};
 
 	componentDidMount() {
-		console.log(this.props);
 		axiosGetInstance
 			.get()
 			.then((res) => {
@@ -93,7 +91,7 @@ class DataItems extends Component {
 			.then((res) => {
 				// console.log(res);
 				if (res.status === 200) {
-					console.log('ene', res.data);
+					console.log('DATA RESPONSE', res.data);
 					// return <Redirect to="/item-details/" />;
 					return this.props.history.push({
 						pathname: '/item-details',
@@ -158,6 +156,7 @@ class DataItems extends Component {
 					add={this.addToAccount}
 					data={item}
 					price={item.minPrice}
+					currency={this.state.currency}
 				/>
 			);
 		});
@@ -178,4 +177,4 @@ class DataItems extends Component {
 	}
 }
 
-export default withRouter(DataItems);
+export default DataItems;

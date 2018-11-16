@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import DataItems from './DataItems';
 import './Main.less';
 import Tournaments from '../components/Tournaments/Tournaments';
