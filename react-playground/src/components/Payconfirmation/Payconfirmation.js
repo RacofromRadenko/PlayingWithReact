@@ -108,99 +108,99 @@ class Payconfirmation extends Component {
 				</button>
 			</div>
 		) : (
-			<div className="Payconfirmation">
-				<div style={{ padding: '10px' }}>
-					<h3>Order details:</h3>
-					<hr />
-					<span
-						style={{
-							display: 'inline-block',
-							fontSize: '12.5pt',
-							fontWeight: '600'
-						}}
-					>
-						Order ID:
-						<p
+				<div className="Payconfirmation">
+					<div style={{ padding: '10px', display: "inline-block" }}>
+						<h3>Order details:</h3>
+						<hr />
+						<span
 							style={{
-								display: 'inline',
-								paddingLeft: '5px',
+								display: 'block',
 								fontSize: '12.5pt',
-								fontWeight: '500',
-								color: 'green'
+								fontWeight: '600'
 							}}
 						>
-							{this.props.itemData.order_id}
-						</p>
-					</span>
-					<span
-						style={{
-							display: 'inline-block',
-							fontSize: '12.5pt',
-							fontWeight: '600'
-						}}
-					>
-						Name:
+							Order ID:
 						<p
+								style={{
+									display: 'inline',
+									paddingLeft: '5px',
+									fontSize: '12.5pt',
+									fontWeight: '500',
+									color: 'green'
+								}}
+							>
+								{this.props.itemData.order_id}
+							</p>
+						</span>
+						<span
 							style={{
-								display: 'inline',
-								paddingLeft: '5px',
-								fontSize: '12pt',
-								fontWeight: '500',
-								color: 'green'
-							}}
-						>
-							{this.props.name}
-						</p>
-					</span>
-					<span
-						style={{
-							display: 'inline-block',
-							fontSize: '12.5pt',
-							fontWeight: '500'
-						}}
-					>
-						Price:
-						<p
-							style={{
-								display: 'inline',
-								paddingLeft: '5px',
+								display: 'block',
 								fontSize: '12.5pt',
-								fontWeight: '500',
-								color: 'green'
+								fontWeight: '600'
 							}}
 						>
-							{this.props.itemData.price}
-							{this.props.itemData.currency}
-						</p>
-					</span>
-					<hr />
+							Name:
+						<p
+								style={{
+									display: 'inline',
+									paddingLeft: '5px',
+									fontSize: '12pt',
+									fontWeight: '500',
+									color: 'green'
+								}}
+							>
+								{this.props.name}
+							</p>
+						</span>
+						<span
+							style={{
+								display: 'block',
+								fontSize: '12.5pt',
+								fontWeight: '500'
+							}}
+						>
+							Price:
+						<p
+								style={{
+									display: 'inline',
+									paddingLeft: '5px',
+									fontSize: '12.5pt',
+									fontWeight: '500',
+									color: 'green'
+								}}
+							>
+								{this.props.itemData.price}
+								{this.props.itemData.currency}
+							</p>
+						</span>
+						<hr />
+					</div>
+					<button
+						className="btn btn-outline-primary"
+						style={{
+							float: 'left',
+							display: 'block',
+							width: '40%',
+							margin: 'auto 5%'
+						}}
+						onClick={this.props.cancelModal}
+					>
+						Cancel
+				</button>
+					<button
+						className="btn btn-outline-success"
+						style={{
+							float: 'right',
+							display: 'block',
+							width: '40%',
+							margin: 'auto 5%'
+						}}
+						onClick={(e) => this.buySelectedItem(e, this.props.itemData.order_id)}
+					>
+						Buy
+				</button>
 				</div>
-				<button
-					className="btn btn-outline-primary"
-					style={{
-						float: 'left',
-						display: 'block',
-						width: '40%',
-						margin: 'auto 5%'
-					}}
-					onClick={this.props.cancelModal}
-				>
-					Cancel
-				</button>
-				<button
-					className="btn btn-outline-success"
-					style={{
-						float: 'right',
-						display: 'block',
-						width: '40%',
-						margin: 'auto 5%'
-					}}
-					onClick={(e) => this.buySelectedItem(e, this.props.itemData.order_id)}
-				>
-					Buy
-				</button>
-			</div>
-		);
+			);
 
 		return <div className="Payconfirmation">{displayResults}</div>;
 	}

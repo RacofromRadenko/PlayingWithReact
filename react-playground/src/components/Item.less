@@ -4,11 +4,28 @@
 	flex-direction: row;
 	margin: 1.5rem;
 	justify-content: center;
-
+	border-radius: 5px;
 	&:hover,
 	:focus {
 		cursor: pointer;
-		box-shadow: 5px 5px 45px black;
+		box-shadow: 5px 5px 45px rgb(24, 24, 24);
 		transform: scale(1.05);
+	}
+}
+
+
+@media screen and (max-width: 600px) {
+	.Item{
+		
+		.card {
+			// flex-direction: column !important;
+			.card-img {
+				// flex-direction: column !important;
+			}
+
+			.card-title{
+				font-size: 10pt;
+			}
+		}
 	}
 }

@@ -11,54 +11,13 @@ class ItemDetails extends Component {
 		showModal: false
 	};
 
-	componentWillMount() {}
+	componentWillMount() { }
 
 	componentDidMount() {
 		console.log(this.state);
 	}
 
-	// buySelectedItem = (e, orderID) => {
-	// 	e.preventDefault();
-	// 	const config = {
-	// 		crossDomain: true,
-	// 		url: 'https://sandboxapi.g2a.com/v1/order/pay/' + orderID,
-	// 		method: 'PUT',
-	// 		headers: {
-	// 			Authorization: 'qdaiciDiyMaTjxMt, 74026b3dc2c6db6a30a73e71cdb138b1e1b5eb7a97ced46689e2d28db1050875',
-	// 			'Content-Type': 'application/json'
-	// 		},
-	// 		processData: false
-	// 	};
 
-	// 	const getKey = {
-	// 		crossDomain: true,
-	// 		url: 'https://sandboxapi.g2a.com/v1/order/key/' + orderID,
-	// 		method: 'GET',
-	// 		headers: {
-	// 			Authorization: 'qdaiciDiyMaTjxMt, 74026b3dc2c6db6a30a73e71cdb138b1e1b5eb7a97ced46689e2d28db1050875',
-	// 			'Content-Type': 'application/json'
-	// 		},
-	// 		processData: false
-	// 	};
-
-	// 	axios(config)
-	// 		.then((res) => {
-	// 			console.log(res);
-	// 			if (res.status === 200) {
-	// 				console.log('[TRANSACTION-ID]', res.data.transaction_id);
-	// 				axios(getKey).then((res) => {
-	// 					console.log('[KEY]', res.data.key);
-	// 					this.handlerShowModal();
-	// 				});
-	// 			}
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log(err);
-	// 		});
-
-	// 	console.log(orderID);
-	// 	console.log(config.data);
-	// };
 
 	handlerShowModal = () => {
 		this.setState({
@@ -80,7 +39,7 @@ class ItemDetails extends Component {
 					<img
 						className="card-img-top"
 						src={this.props.location.state.data.smallImage}
-						alt="Card image cap"
+						alt={this.props.location.state.data.name}
 						style={{ maxWidth: '45%', maxHeight: '45%', margin: '2% 25%' }}
 					/>
 					<div className="card-body" style={{ textAlign: 'center' }}>

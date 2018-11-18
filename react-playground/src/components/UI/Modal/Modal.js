@@ -26,45 +26,6 @@ class Modal extends Component {
 						opacity: this.props.show ? '1' : '0'
 					}}
 				>
-					{/* <div style={{ padding: '10px', textAlign: 'center' }}>
-						<h5>
-							Order ID: <p>{this.props.itemData.order_id}</p>
-						</h5>
-						<h5>
-							Name: <p>{this.props.name}</p>
-						</h5>
-						<h5>
-							Price:
-							<p>
-								{this.props.itemData.price}
-								{this.props.itemData.currency}
-							</p>
-						</h5>
-					</div>
-					<button
-						className="btn btn-outline-primary"
-						style={{
-							float: 'left',
-							display: 'block',
-							width: '40%',
-							margin: 'auto 5%'
-						}}
-						onClick={this.props.cancelModal}
-					>
-						Cancel
-					</button>
-					<button
-						className="btn btn-outline-success"
-						style={{
-							float: 'right',
-							display: 'block',
-							width: '40%',
-							margin: 'auto 5%'
-						}}
-					>
-						Buy
-                    </button> */}
-
 					<Payconfirmation
 						itemData={this.props.itemData}
 						name={this.props.name}

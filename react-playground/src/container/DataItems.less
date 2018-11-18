@@ -1,23 +1,17 @@
 .DataItems {
 	position: relative;
-	display: inline-block;
-	width: 100%;
+	display: flex;
+	flex-direction: column;
 	.bottom-area {
-		position: relative;
-		width: 90%;
-		margin: auto;
-		bottom: 0;
-		height: 50px;
-		.Previous {
-			position: absolute;
-			left: 20px;
-			margin: 5px auto;
-		}
-		.Next {
-			position: relative;
-			float: right;
-			right: 20px;
-			margin: 5px auto;
+		display: flex;
+    	flex-direction: row;
+   		flex-wrap: nowrap;
+   		justify-content: center;
+    	align-items: center;
+	
+		.btn {
+		
+			margin:0 4px;
 		}
 	}
 }
