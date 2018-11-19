@@ -4,22 +4,48 @@ import './DataItems.less';
 import axios from 'axios';
 
 class DataItems extends Component {
-
 	state = {
 		data: [],
 		page: 1,
 		pages: [],
 		total: 0,
 		itemDetails: false,
-		currency: 'EUR'
+		currency: 'EUR',
+		minPrice: 0,
+		maxPrice: 1000
 	};
 
 	componentDidMount() {
 		this.pullData();
 	}
 
-	pullData() {
+	handleMinPriceEvent = (event) => {
+		// console.log(event.target.value);
 
+		this.setState(
+			{
+				minPrice: event.target.value
+			},
+			() => {
+				this.pullData();
+			}
+		);
+	};
+
+	handleMaxPriceEvent = (event) => {
+		// console.log(event.target.value);
+
+		this.setState(
+			{
+				maxPrice: event.target.value
+			},
+			() => {
+				this.pullData();
+			}
+		);
+	};
+
+	pullData() {
 		const config = {
 			url: 'https://sandboxapi.g2a.com/v1/products',
 			method: 'GET',
@@ -29,62 +55,76 @@ class DataItems extends Component {
 			},
 			processData: false,
 			params: {
-				page: 1
+				page: 1,
+				minPriceFrom: this.state.minPrice,
+				minPriceTo: this.state.maxPrice
 			}
 		};
 
 		axios(config)
 			.then((response) => {
 				console.log(response.data.docs);
-				this.setState({
-					data: response.data.docs,
-					total: response.data.total,
-					pages: (function () {
-						let totalPages = [];
-						for (let i = 1; i <= Math.ceil(response.data.total / 20); i++) {
-							totalPages.push(i)
-						}
 
-						return totalPages;
-					}())
-				}, () => { console.log(response.data.total) });
+				this.setState(
+					{
+						data: response.data.docs,
+						total: response.data.total,
+						pages: (function() {
+							let totalPages = [];
+							for (let i = 1; i <= Math.ceil(response.data.total / 20); i++) {
+								totalPages.push(i);
+							}
+
+							return totalPages;
+						})()
+					},
+					() => {
+						console.log(response.data.total);
+					}
+				);
 			})
 			.catch((error) => {
 				console.log(error);
 			});
-
-
 	}
-
 
 	pageUp = () => {
-		if (parseInt(this.state.total) - (parseInt(this.state.page) * 20) >= 0) {
-			this.setState({
-				page: this.state.page + 1
-			}, () => {
-				this.pullData()
-			})
-
+		if (parseInt(this.state.total) - parseInt(this.state.page) * 20 >= 0) {
+			this.setState(
+				{
+					page: this.state.page + 1
+				},
+				() => {
+					this.pullData();
+				}
+			);
 		}
-	}
+	};
+
 	pageDown = () => {
 		if (parseInt(this.state.page) > 1) {
-			this.setState({
-				page: this.state.page - 1
-			}, () => {
-				this.pullData()
-			});
-
+			this.setState(
+				{
+					page: this.state.page - 1
+				},
+				() => {
+					this.pullData();
+				}
+			);
 		}
-	}
+	};
+
 	changePage = (ev) => {
 		console.log(ev.target.getAttribute('data-page'));
-		this.setState({
-			page: parseInt(ev.target.getAttribute('data-page'))
-		}, () => {
-			this.pullData()
-		});
-	}
+		this.setState(
+			{
+				page: parseInt(ev.target.getAttribute('data-page'))
+			},
+			() => {
+				this.pullData();
+			}
+		);
+	};
 
 	addToAccount = (e, data) => {
 		console.log(e.target.value, data);
@@ -123,8 +163,26 @@ class DataItems extends Component {
 			});
 	};
 
-	render() {
+	ascendingSort = () => {
+		// console.log('prvi', this.state.data);
 
+		this.setState({
+			data: this.state.data.sort((a, b) => {
+				return a.minPrice - b.minPrice;
+			})
+		});
+		// console.log('drugi', this.state.data);
+	};
+
+	descendingSort = () => {
+		this.setState({
+			data: this.state.data.sort((a, b) => {
+				return b.minPrice - a.minPrice;
+			})
+		});
+	};
+
+	render() {
 		const item = this.state.data.map((item) => {
 			return (
 				<Item
@@ -143,17 +201,58 @@ class DataItems extends Component {
 
 		return (
 			<div className="DataItems">
+				<div className="PriceRangeArea">
+					<button className="btn btn-primary" onClick={this.descendingSort}>
+						Descending Sort
+					</button>
+					<label>
+						From:
+						<input type="text" onChange={this.handleMinPriceEvent} />
+						<p>{this.state.currency}</p>
+					</label>
+					<label>
+						To:
+						<input type="text" onChange={this.handleMaxPriceEvent} />
+						<p>{this.state.currency}</p>
+					</label>
+					<button className="btn btn-primary" onClick={this.ascendingSort}>
+						Ascending Sort
+					</button>
+
+					{/* <button onClick={this.pullDataWithPriceRange}>Price Filter</button> */}
+				</div>
 				{item}
 				<div className="bottom-area">
-					<button className={this.state.page === 1 ? 'btn btn-info disabled' : 'btn btn-info'} onClick={() => this.pageDown()}>
+					<button
+						className={this.state.page === 1 ? 'btn btn-info disabled' : 'btn btn-info'}
+						onClick={() => this.pageDown()}
+					>
 						Previous
 					</button>
 					{this.state.pages.map((key) => {
-						return <button className={this.state.page === key ? 'btn btn-info disabled' : 'btn btn-info'} key={key} data-page={key} onClick={(ev) => {
-							this.changePage(ev)
-						}}>{key}</button>
+						return (
+							<button
+								className={this.state.page === key ? 'btn btn-info disabled' : 'btn btn-info'}
+								key={key}
+								data-page={key}
+								onClick={(ev) => {
+									this.changePage(ev);
+								}}
+							>
+								{key}
+							</button>
+						);
 					})}
-					<button className={this.state.page === this.state.pages[this.state.pages.length - 1] ? 'btn btn-info disabled' : 'btn btn-info'} onClick={() => this.pageUp()}>
+					<button
+						className={
+							this.state.page === this.state.pages[this.state.pages.length - 1] ? (
+								'btn btn-info disabled'
+							) : (
+								'btn btn-info'
+							)
+						}
+						onClick={() => this.pageUp()}
+					>
 						Next
 					</button>
 				</div>

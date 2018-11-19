@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 
 const app = (
-	<BrowserRouter>
+	<BrowserRouter basename="/build4">
 		<App />
 	</BrowserRouter>
 );

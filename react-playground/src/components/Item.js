@@ -4,29 +4,24 @@ import './Item.less';
 class Item extends Component {
 	render() {
 		return (
-			<div className="Item">
-				<div
-					className="card"
-					style={{ width: '100%', maxHeight: '300px', flexDirection: 'row' }}
-					onClick={(e) => this.props.add(e, this.props.data)}
-				>
-					<img
-						className="card-img-left"
-						src={this.props.image}
-						alt={this.props.name}
-						style={{ maxWidth: '35%', maxHeight: '90%', margin: '5% 2.5%', flexDirection: 'row' }}
-					/>
-					<div className="card-body" style={{ textAlign: 'center', margin: '50px auto' }}>
-						<h5 className="card-title" style={{ textAlign: 'center' }}>
-							{this.props.name}
-						</h5>
+			<div className="Item" onClick={(e) => this.props.add(e, this.props.data)}>
+				<div className="image-area">
+					<div className="image-wrapper">
+						<div className="image-content">
+							<img src={this.props.image} alt={this.props.name} />
+						</div>
+					</div>
+				</div>
+				<div className="text-area">
+					<div className="card-body">
+						<h5 className="card-title">{this.props.name}</h5>
 
-						<span style={{ fontWeight: '450', display: 'inline-block' }}>
-							Price:
-							<p style={{ display: 'inline', paddingLeft: '5px', color: 'green', fontWeight: '450' }}>
+						<div className="text-wrapper">
+							<h6>Price:</h6>
+							<p>
 								{this.props.price} {this.props.currency}
 							</p>
-						</span>
+						</div>
 					</div>
 				</div>
 			</div>

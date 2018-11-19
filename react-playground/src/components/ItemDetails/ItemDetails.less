@@ -1,10 +1,81 @@
 .ItemDetails {
 	margin: 0;
 	width: 100%;
-	.buttonArea {
+	border-radius: 5px;
+	border: 1px solid #dadada;
+
+	.first-row {
+		width: 100%;
+		text-align: center;
+		margin: 10px;
+
+		.card-text {
+			display: inline-block;
+			h6 {
+				display: inline;
+			}
+			p {
+				display: inline;
+				font-weight: 700;
+				padding-left: 5px;
+				color: green;
+			}
+		}
+	}
+
+	.second-row {
+		width: 100%;
+		display: inline-block;
+		.image-wrapper {
+			width: 40%;
+			position: relative;
+			display: inline;
+			.image-content {
+			}
+		}
+		.card-body {
+			padding: auto 5px;
+			width: 100%;
+			position: relative;
+			padding-bottom: 56.25%;
+			padding-top: 30px;
+			height: 0;
+			overflow: hidden;
+			margin: auto 10px;
+			iframe {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+		}
+	}
+
+	.second-row {
+		.col-md-6 {
+			.text-wrapper {
+				padding: 10px;
+				.text-content {
+					display: inline-block;
+					h6 {
+						display: inline;
+					}
+
+					p {
+						display: inline;
+						padding-left: 5px;
+						font-weight: 700;
+					}
+				}
+			}
+		}
+	}
+
+	.button-area {
 		margin: 0;
 		display: inline-block;
-
+		width: 100%;
 		.goBack {
 			display: block;
 			width: 40%;

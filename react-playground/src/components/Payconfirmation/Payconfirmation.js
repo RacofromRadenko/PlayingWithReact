@@ -79,128 +79,73 @@ class Payconfirmation extends Component {
 	render() {
 		const displayResults = this.state.showCodenTransactionID ? (
 			<div className="Payconfirmation">
-				<div style={{ padding: '10px' }}>
-					<h3>Order details completed:</h3>
+				<div className="text-wrapper">
+					<h3>Order details completed</h3>
 					<hr />
-					<h5>
-						Transaction ID:{' '}
+					<span>
+						<h5>Transaction ID:</h5>
 						<p>
 							<code>{this.state.transactionID}</code>
 						</p>
-					</h5>
-					<h5>
-						Transaction Code:{' '}
+					</span>
+
+					<span>
+						<h5>KEY:</h5>
 						<p>
 							<code>{this.state.transactionCode}</code>
 						</p>
-					</h5>
+					</span>
 				</div>
-				<button
-					className="btn btn-outline-success"
-					style={{
-						display: 'block',
-						width: '90%',
-						margin: 'auto 5%'
-					}}
-					onClick={this.confirmComplete}
-				>
+				<button className="btn btn-outline-success confirm" onClick={this.confirmComplete}>
 					Confirm
 				</button>
 			</div>
 		) : (
-				<div className="Payconfirmation">
-					<div style={{ padding: '10px', display: "inline-block" }}>
-						<h3>Order details:</h3>
-						<hr />
-						<span
-							style={{
-								display: 'block',
-								fontSize: '12.5pt',
-								fontWeight: '600'
-							}}
-						>
-							Order ID:
-						<p
-								style={{
-									display: 'inline',
-									paddingLeft: '5px',
-									fontSize: '12.5pt',
-									fontWeight: '500',
-									color: 'green'
-								}}
-							>
-								{this.props.itemData.order_id}
-							</p>
-						</span>
-						<span
-							style={{
-								display: 'block',
-								fontSize: '12.5pt',
-								fontWeight: '600'
-							}}
-						>
-							Name:
-						<p
-								style={{
-									display: 'inline',
-									paddingLeft: '5px',
-									fontSize: '12pt',
-									fontWeight: '500',
-									color: 'green'
-								}}
-							>
-								{this.props.name}
-							</p>
-						</span>
-						<span
-							style={{
-								display: 'block',
-								fontSize: '12.5pt',
-								fontWeight: '500'
-							}}
-						>
-							Price:
-						<p
-								style={{
-									display: 'inline',
-									paddingLeft: '5px',
-									fontSize: '12.5pt',
-									fontWeight: '500',
-									color: 'green'
-								}}
-							>
-								{this.props.itemData.price}
-								{this.props.itemData.currency}
-							</p>
-						</span>
-						<hr />
-					</div>
-					<button
-						className="btn btn-outline-primary"
-						style={{
-							float: 'left',
-							display: 'block',
-							width: '40%',
-							margin: 'auto 5%'
-						}}
-						onClick={this.props.cancelModal}
-					>
-						Cancel
-				</button>
-					<button
-						className="btn btn-outline-success"
-						style={{
-							float: 'right',
-							display: 'block',
-							width: '40%',
-							margin: 'auto 5%'
-						}}
-						onClick={(e) => this.buySelectedItem(e, this.props.itemData.order_id)}
-					>
-						Buy
-				</button>
+			<div className="Payconfirmation">
+				<div className="text-wrapper">
+					<h3>Order details</h3>
+					<hr />
+					<span>
+						<h5>Order ID:</h5>
+						<p>{this.props.itemData.order_id}</p>
+					</span>
+					<span>
+						<h5>Name:</h5>
+						<p>{this.props.name}</p>
+					</span>
+					<span>
+						<h5> Price:</h5>
+						<p>{this.props.itemData.price}</p>
+						<p>{this.props.itemData.currency}</p>
+					</span>
+					<hr />
 				</div>
-			);
+				<button
+					className="btn btn-outline-primary"
+					style={{
+						float: 'left',
+						display: 'block',
+						width: '40%',
+						margin: 'auto 5%'
+					}}
+					onClick={this.props.cancelModal}
+				>
+					Cancel
+				</button>
+				<button
+					className="btn btn-outline-success"
+					style={{
+						float: 'right',
+						display: 'block',
+						width: '40%',
+						margin: 'auto 5%'
+					}}
+					onClick={(e) => this.buySelectedItem(e, this.props.itemData.order_id)}
+				>
+					Buy
+				</button>
+			</div>
+		);
 
 		return <div className="Payconfirmation">{displayResults}</div>;
 	}
