@@ -168,7 +168,7 @@ class DataItems extends Component {
 
 		this.setState({
 			data: this.state.data.sort((a, b) => {
-				return a.minPrice - b.minPrice;
+				return b.minPrice - a.minPrice;
 			})
 		});
 		// console.log('drugi', this.state.data);
@@ -177,7 +177,7 @@ class DataItems extends Component {
 	descendingSort = () => {
 		this.setState({
 			data: this.state.data.sort((a, b) => {
-				return b.minPrice - a.minPrice;
+				return a.minPrice - b.minPrice;
 			})
 		});
 	};

@@ -60,8 +60,8 @@ class ItemDetails extends Component {
 						<div className="card-body">
 							{this.state.videoPath !== undefined ? (
 								<iframe
-									width="853"
-									height="480"
+									width="560"
+									height="315"
 									title={this.props.location.state.data.name}
 									src={this.state.videoPath.url.replace('watch', 'embed')}
 								/>
